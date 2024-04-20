@@ -1,0 +1,23 @@
+@if (teacher$ | async; as teacher) {
+  <h1 class="text-4xl text-purple-600 font-bold">{{ teacher.id }} - {{ teacher.name }}</h1>
+  <p class="text-lg">
+    <span class="font-bold text-purple-500">DNI:</span> {{ teacher.dni }}
+  </p>
+  <p class="text-lg">
+    <span class="font-bold text-purple-500">Email:</span> {{ teacher.email }}
+  </p>
+  <p class="text-lg">
+    <span class="font-bold text-purple-500">Genero:</span> {{ teacher.gender }}
+  </p>
+  <p class="text-lg">
+    <span class="font-bold text-purple-500">Salario:</span> S/{{ teacher.salary }}
+  </p>
+  <p class="text-lg">
+    <span class="font-bold text-purple-500">Fecha de nacimiento:</span> {{ teacher.birthdate }}
+  </p>
+  <p class="text-lg">
+    <span class="font-bold text-purple-500">Categoria:</span> {{ teacher.category.name }}
+  </p>
+} @else {
+  <p>Cargando...</p>
+}

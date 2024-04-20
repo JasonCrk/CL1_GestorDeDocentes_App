@@ -1,0 +1,97 @@
+<section class="w-full">
+  <h1 class="text-3xl font-bold my-4 text-center">Registrar Docente</h1>
+
+  <article class="flex justify-center">
+    <form class="flex flex-col gap-2 w-[50%] min-w-[400px]" [formGroup]="createTeacherForm" (ngSubmit)="onSubmit()">
+
+      <!-- --------------------------------------------------------- -->
+      <!-- Se puede mejorar esto aún más separandolo por componentes -->
+      <!-- --------------------------------------------------------- -->
+
+      <div>
+        <label for="name" class="font-medium">Nombre</label>
+        <input id="name" type="text" class="block border-b border-gray-400 w-full p-1 outline-none" placeholder="Ingresar nombre" formControlName="name" />
+
+        @if (name.invalid && (name.touched || name.dirty || isSubmitted)) {
+          @if (name.hasError('required')) {<p class="text-red-400">El nombre es requerido</p>}
+          @if (name.hasError('minlength')) {<p class="text-red-400">El minimo número de caracteres es 4</p>}
+          @if (name.hasError('maxlength')) {<p class="text-red-400">El máximo número de caracteres es 45</p>}
+        }
+      </div>
+
+      <div>
+        <label for="email" class="font-medium">Email</label>
+        <input id="email" type="email" class="block border-b border-gray-400 w-full p-1 outline-none" placeholder="Ingresar email" formControlName="email" />
+        @if (email.invalid && (email.touched || email.dirty || isSubmitted)) {
+          @if (email.hasError('required')) {<p class="text-red-400">El correo electronico es requerido</p>}
+          @if (email.hasError('email')) {<p class="text-red-400">El correo electronico es invalido</p>}
+          @if (email.hasError('minlength')) {<p class="text-red-400">El minimo número de caracteres es 10</p>}
+          @if (email.hasError('maxlength')) {<p class="text-red-400">El máximo número de caracteres es 45</p>}
+        }
+      </div>
+
+      <div>
+        <label for="DNI" class="font-medium">DNI</label>
+        <input id="DNI" type="text" class="block border-b border-gray-400 w-full p-1 outline-none" placeholder="Introducir DNI" formControlName="dni" />
+        @if (dni.invalid && (dni.touched || dni.dirty || isSubmitted)) {
+          @if (dni.hasError('required')) {<p class="text-red-400">El DNI es requerido</p>}
+          @if (dni.hasError('pattern')) {<p class="text-red-400">El DNI es invalido</p>}
+        }
+      </div>
+
+      <div>
+        <label for="salary" class="font-medium">Salario</label>
+        <input id="salary" type="number" class="block border-b w-full border-gray-400 p-1 outline-none" placeholder="Ingresar salario" formControlName="salary" />
+        @if (salary.invalid && (salary.touched || salary.dirty || isSubmitted)) {
+          @if (salary.hasError('required')) {<p class="text-red-400">El salario es requerido</p>}
+          @if (salary.hasError('min')) {<p class="text-red-400">El monto no puede ser negativo ni 0</p>}
+        }
+      </div>
+
+      <div>
+        <label for="birthdate" class="font-medium">Fecha de nacimiento</label>
+        <input id="birthdate" type="date" class="block w-full border-b border-gray-400 p-1 outline-none" placeholder="Seleccionar fecha de nacimiento" formControlName="birthdate" />
+        @if (birthdate.invalid && (birthdate.touched || birthdate.dirty || isSubmitted)) {
+          @if (birthdate.hasError('isToday')) {<p class="text-red-400">La fecha de nacimiento es invalida</p>}
+          @if (birthdate.hasError('required')) {<p class="text-red-400">La fecha de nacimiento es requerida</p>}
+        }
+      </div>
+
+      <div>
+        <label class="font-medium">Genero</label>
+
+        <div class="w-full flex gap-2 flex-col">
+          <label class="flex gap-1 items-center">
+            <input formControlName="gender" value="Hombre" type="radio" class="size-4" />
+            <span>Hombre</span>
+          </label>
+          <label class="flex gap-1 items-center">
+            <input formControlName="gender" value="Mujer" type="radio" class="size-4" />
+            <span>Mujer</span>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label for="category" class="font-medium">Categoria</label>
+
+        <select id="category" class="block w-full border-b border-gray-400 p-1 outline-none" formControlName="categoryId">
+          @if (categories$ | async; as categories) {
+            @for(category of categories; track category.id) {
+              <option [value]="category.id">{{ category.name }}</option>
+            }
+          }
+        </select>
+
+        @if (category.invalid && (category.touched || category.dirty || isSubmitted)) {
+          @if (category.hasError('required') || category.value === 0) {<p class="text-red-400">La categoria es requerida</p>}
+          @else if (category.hasError('min') || category.hasError('pattern')) {<p class="text-red-400">La categoria es invalida</p>}
+        }
+      </div>
+
+      <button type="submit" class="px-3 py-2 bg-sky-400 rounded text-white" [disabled]="isLoading">
+        Registrar docente
+      </button>
+    </form>
+  </article>
+</section>

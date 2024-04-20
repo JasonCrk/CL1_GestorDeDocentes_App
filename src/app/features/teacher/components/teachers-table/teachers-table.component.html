@@ -1,0 +1,35 @@
+<table class="table-auto w-full rounded-lg overflow-hidden">
+  <thead class="bg-purple-500">
+    <tr class="text-white">
+      <th class="py-2 font-medium">ID</th>
+      <th class="py-2 font-medium text-start">Nombre</th>
+      <th class="py-2 font-medium text-start">Email</th>
+      <th class="py-2 font-medium text-start">Gender</th>
+      <th class="py-2 font-medium text-start">Category</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody class="divide-y divide-gray-200">
+    @for (teacher of teachers; track teacher.id) {
+      <tr>
+        <td class="text-center py-2">{{ teacher.id }}</td>
+        <td>
+          <a class="text-purple-600 font-medium hover:underline hover:underline-offset-2" href="/dashboard/teachers/{{ teacher.id }}">
+            {{ teacher.name }}
+          </a>
+        </td>
+        <td>{{ teacher.email }}</td>
+        <td>{{ teacher.gender }}</td>
+        <td>{{ teacher.category }}</td>
+        <td class="flex gap-2 py-2 items-center">
+          <app-delete-teacher-button [teacherId]="teacher.id" />
+          <a class="bg-orange-500 px-3 py-1.5 flex items-center text-white rounded-md text-sm gap-1" href="/dashboard/teachers/{{ teacher.id }}/edit">
+            <ng-icon name="heroPencilSquare" class="text-lg"></ng-icon>
+            <span>Editar</span>
+          </a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
